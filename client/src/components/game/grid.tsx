@@ -11,6 +11,7 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
   const rows = Array(6).fill("");
 
   return (
+    <div className="flex justify-center items-center">
     <div className="inline-grid gap-[2px] mx-auto">
       {rows.map((_, i) => {
         const isCurrentRow = i === currentRow;
@@ -53,7 +54,7 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
                 <div
                   key={j}
                   className={cn(
-                    "w-9 h-9 border-2 flex items-center justify-center text-lg font-bold rounded-sm transition-colors",
+                    "w-12 h-12 border-2 flex items-center justify-center text-lg font-bold rounded-sm transition-colors",
                     bgColor,
                     textColor,
                     borderColor,
@@ -69,6 +70,7 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
           </div>
         );
       })}
+      </div>
     </div>
   );
 }
