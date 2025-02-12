@@ -61,6 +61,10 @@ export function useGame() {
         maxStreak: won 
           ? Math.max(stats.maxStreak, stats.currentStreak + 1)
           : stats.maxStreak,
+        guessDistribution: {
+          ...stats.guessDistribution,
+          [gameState.currentRow + 1]: (stats.guessDistribution?.[gameState.currentRow + 1] || 0) + (won ? 1 : 0),
+        },
       };
       updateStatsMutation.mutate(newStats);
     }
