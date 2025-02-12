@@ -4,16 +4,17 @@ interface GridProps {
   guesses: string[];
   solution: string;
   currentRow: number;
+  currentGuess: string;
 }
 
-export function Grid({ guesses, solution, currentRow }: GridProps) {
+export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps) {
   const rows = Array(6).fill("");
 
   return (
     <div className="grid gap-2 mx-auto max-w-sm">
       {rows.map((_, i) => {
-        const guess = guesses[i] || "";
         const isCurrentRow = i === currentRow;
+        const guess = isCurrentRow ? currentGuess : guesses[i] || "";
 
         return (
           <div key={i} className="grid grid-cols-6 gap-2">
@@ -22,7 +23,7 @@ export function Grid({ guesses, solution, currentRow }: GridProps) {
               const solutionDigit = solution[j];
 
               let bgColor = "bg-background";
-              if (digit) {
+              if (digit && !isCurrentRow) {
                 if (digit === solutionDigit) {
                   bgColor = "bg-green-500";
                 } else if (solution.includes(digit)) {
@@ -49,7 +50,7 @@ export function Grid({ guesses, solution, currentRow }: GridProps) {
                     "w-12 h-12 border-2 flex items-center justify-center text-xl font-bold transition-colors",
                     bgColor,
                     isCurrentRow && "border-primary",
-                    digit && "text-primary-foreground"
+                    digit && !isCurrentRow && "text-primary-foreground"
                   )}
                 >
                   {digit}

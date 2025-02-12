@@ -68,6 +68,7 @@ export default function Game() {
           guesses={gameState.guesses}
           solution={gameState.solution}
           currentRow={gameState.currentRow}
+          currentGuess={currentGuess}
         />
 
         <div className="mt-8">
