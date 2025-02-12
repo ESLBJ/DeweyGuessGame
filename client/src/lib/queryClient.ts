@@ -1,1 +1,1 @@
-// This file can be deleted as we're using localStorage instead of API calls
+// We're using localStorage for state management, so we can remove this file
