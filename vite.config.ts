@@ -9,6 +9,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 export default defineConfig({
   plugins: [react(), runtimeErrorOverlay(), themePlugin()],
+  server: {
+    host: true,
+    strictPort: true,
+    allowedHosts: 'all',
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "client", "src"),
