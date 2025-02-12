@@ -61,8 +61,8 @@ export default function Game() {
         </div>
       </header>
 
-      <main className="container max-w-lg mx-auto p-4">
-        <div className="mb-8 text-center">
+      <main className="container max-w-lg mx-auto p-4 space-y-8">
+        <div className="text-center">
           <h2 className="text-xl font-bold mb-2">{todaysBook.title}</h2>
           <p className="text-muted-foreground">by {todaysBook.author}</p>
         </div>

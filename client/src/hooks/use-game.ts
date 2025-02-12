@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
 import { getTodaysBook } from "@/lib/books";
 import type { GameState, GameStats } from "@shared/types";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
-import { queryClient } from "@/lib/queryClient";
 
 const GAME_STATE_KEY = "ddc-game-state";
+const STATS_KEY = "ddc-stats";
 const MAX_ATTEMPTS = 6;
+
+const DEFAULT_STATS: GameStats = {
+  totalGames: 0,
+  wins: 0,
+  currentStreak: 0,
+  maxStreak: 0,
+};
 
 export function useGame() {
   const [gameState, setGameState] = useState<GameState>(() => {
@@ -23,28 +28,21 @@ export function useGame() {
     };
   });
 
-  const { data: stats = {
-    totalGames: 0,
-    wins: 0,
-    currentStreak: 0,
-    maxStreak: 0,
-  } } = useQuery<GameStats>({
-    queryKey: ["/api/stats"],
-    refetchOnWindowFocus: false,
-  });
-
-  const updateStatsMutation = useMutation({
-    mutationFn: async (newStats: GameStats) => {
-      await apiRequest("POST", "/api/stats", newStats);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/stats"] });
-    },
+  const [stats, setStats] = useState<GameStats>(() => {
+    const saved = localStorage.getItem(STATS_KEY);
+    if (saved) {
+      return JSON.parse(saved);
+    }
+    return DEFAULT_STATS;
   });
 
   useEffect(() => {
     localStorage.setItem(GAME_STATE_KEY, JSON.stringify(gameState));
   }, [gameState]);
+
+  useEffect(() => {
+    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+  }, [stats]);
 
   const submitGuess = (guess: string) => {
     if (gameState.won || gameState.lost) return;
@@ -58,11 +56,11 @@ export function useGame() {
         totalGames: stats.totalGames + 1,
         wins: stats.wins + (won ? 1 : 0),
         currentStreak: won ? stats.currentStreak + 1 : 0,
-        maxStreak: won 
+        maxStreak: won
           ? Math.max(stats.maxStreak, stats.currentStreak + 1)
           : stats.maxStreak,
       };
-      updateStatsMutation.mutate(newStats);
+      setStats(newStats);
     }
 
     setGameState({

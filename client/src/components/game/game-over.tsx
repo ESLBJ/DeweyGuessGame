@@ -47,9 +47,9 @@ export function GameOver({
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4 space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">
+    <div className="max-w-lg mx-auto p-4 space-y-8">
+      <div className="text-center space-y-4">
+        <h2 className="text-2xl font-bold">
           {won ? "Congratulations! 🎉" : "Game Over"}
         </h2>
         {won ? (
