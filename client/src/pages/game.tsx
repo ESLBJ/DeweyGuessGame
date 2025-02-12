@@ -3,7 +3,7 @@ import { useGame } from "@/hooks/use-game";
 import { Grid } from "@/components/game/grid";
 import { Keyboard } from "@/components/game/keyboard";
 import { StatsModal } from "@/components/game/stats-modal";
-import { GameOverModal } from "@/components/game/game-over-modal";
+import { GameOver } from "@/components/game/game-over";
 import { Button } from "@/components/ui/button";
 import { BarChart2, Sun, Moon } from "lucide-react";
 import { getTodaysBook } from "@/lib/books";
@@ -32,6 +32,8 @@ export default function Game() {
       setCurrentGuess("");
     }
   };
+
+  const gameIsOver = gameState.won || gameState.lost;
 
   return (
     <div className="min-h-screen bg-background">
@@ -73,11 +75,21 @@ export default function Game() {
         />
 
         <div className="mt-8">
-          <Keyboard
-            onKey={handleKey}
-            onDelete={handleDelete}
-            onEnter={handleEnter}
-          />
+          {gameIsOver ? (
+            <GameOver
+              won={gameState.won}
+              solution={gameState.solution}
+              guesses={gameState.guesses}
+              book={todaysBook}
+              attempts={gameState.currentRow}
+            />
+          ) : (
+            <Keyboard
+              onKey={handleKey}
+              onDelete={handleDelete}
+              onEnter={handleEnter}
+            />
+          )}
         </div>
 
         {stats && (
@@ -87,16 +99,6 @@ export default function Game() {
             stats={stats}
           />
         )}
-
-        <GameOverModal
-          open={gameState.won || gameState.lost}
-          onClose={() => {}} // Game over modal can't be closed
-          won={gameState.won}
-          solution={gameState.solution}
-          guesses={gameState.guesses}
-          book={todaysBook}
-          attempts={gameState.currentRow}
-        />
       </main>
     </div>
   );
