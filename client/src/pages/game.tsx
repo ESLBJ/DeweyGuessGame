@@ -3,6 +3,7 @@ import { useGame } from "@/hooks/use-game";
 import { Grid } from "@/components/game/grid";
 import { Keyboard } from "@/components/game/keyboard";
 import { StatsModal } from "@/components/game/stats-modal";
+import { GameOverModal } from "@/components/game/game-over-modal";
 import { Button } from "@/components/ui/button";
 import { BarChart2, Sun, Moon } from "lucide-react";
 import { getTodaysBook } from "@/lib/books";
@@ -86,6 +87,16 @@ export default function Game() {
             stats={stats}
           />
         )}
+
+        <GameOverModal
+          open={gameState.won || gameState.lost}
+          onClose={() => {}} // Game over modal can't be closed
+          won={gameState.won}
+          solution={gameState.solution}
+          guesses={gameState.guesses}
+          book={todaysBook}
+          attempts={gameState.currentRow}
+        />
       </main>
     </div>
   );

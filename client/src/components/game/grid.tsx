@@ -23,9 +23,11 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
               const solutionDigit = solution[j];
 
               let bgColor = "bg-background";
+              let textColor = "";
               if (digit && !isCurrentRow) {
                 if (digit === solutionDigit) {
                   bgColor = "bg-green-500";
+                  textColor = "text-primary-foreground";
                 } else if (solution.includes(digit)) {
                   // Need to account for duplicate digits
                   // Count how many times this digit appears in both strings
@@ -35,6 +37,7 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
                   // Only show yellow if we haven't exceeded the count in solution
                   if (guessCount <= solutionCount) {
                     bgColor = "bg-yellow-500";
+                    textColor = "text-primary-foreground";
                   } else {
                     bgColor = "bg-muted";
                   }
@@ -49,8 +52,8 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
                   className={cn(
                     "w-12 h-12 border-2 flex items-center justify-center text-xl font-bold transition-colors",
                     bgColor,
-                    isCurrentRow && "border-primary",
-                    digit && !isCurrentRow && "text-primary-foreground"
+                    textColor,
+                    isCurrentRow && "border-primary"
                   )}
                 >
                   {digit}
