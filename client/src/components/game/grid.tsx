@@ -18,9 +18,9 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
         const guess = isCurrentRow ? currentGuess : guesses[i] || "";
 
         return (
-          <div key={i} className="grid grid-cols-[repeat(3,1fr)_0.5rem_repeat(3,1fr)] gap-[2px] relative">
+          <div key={i} className="grid grid-cols-6 gap-[2px] relative">
             {solution.length > 3 && (
-              <div className="absolute left-[calc(50%)] top-[calc(100%-4px)] w-2 h-2 bg-primary rounded-full" style={{ transform: 'translateX(-50%)' }} />
+              <div className="absolute left-[calc(50%-4px)] top-1/2 -translate-y-1/2 w-2 h-2 bg-primary rounded-full" />
             )}
             {Array(6).fill("").map((_, j) => {
               const digit = guess[j];
