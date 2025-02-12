@@ -38,7 +38,18 @@ export default function Game() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b p-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">DDC Wordle</h1>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        >
+          {theme === "dark" ? (
+            <Sun className="h-5 w-5" />
+          ) : (
+            <Moon className="h-5 w-5" />
+          )}
+        </Button>
+        <h1 className="text-2xl font-bold absolute left-1/2 -translate-x-1/2">DDC Wordle</h1>
         <div className="flex gap-2">
           <Button
             variant="ghost"
