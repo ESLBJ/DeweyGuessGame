@@ -18,15 +18,25 @@ export function Grid({ guesses, solution, currentRow }: GridProps) {
         return (
           <div key={i} className="grid grid-cols-6 gap-2">
             {Array(6).fill("").map((_, j) => {
-              const letterGuess = guess[j];
-              const letterSolution = solution[j];
-              
+              const digit = guess[j];
+              const solutionDigit = solution[j];
+
               let bgColor = "bg-background";
-              if (letterGuess) {
-                if (letterGuess === letterSolution) {
+              if (digit) {
+                if (digit === solutionDigit) {
                   bgColor = "bg-green-500";
-                } else if (solution.includes(letterGuess)) {
-                  bgColor = "bg-yellow-500";
+                } else if (solution.includes(digit)) {
+                  // Need to account for duplicate digits
+                  // Count how many times this digit appears in both strings
+                  const guessCount = [...guess.slice(0, j + 1)].filter(d => d === digit).length;
+                  const solutionCount = [...solution].filter(d => d === digit).length;
+
+                  // Only show yellow if we haven't exceeded the count in solution
+                  if (guessCount <= solutionCount) {
+                    bgColor = "bg-yellow-500";
+                  } else {
+                    bgColor = "bg-muted";
+                  }
                 } else {
                   bgColor = "bg-muted";
                 }
@@ -36,12 +46,13 @@ export function Grid({ guesses, solution, currentRow }: GridProps) {
                 <div
                   key={j}
                   className={cn(
-                    "w-12 h-12 border-2 flex items-center justify-center text-xl font-bold",
+                    "w-12 h-12 border-2 flex items-center justify-center text-xl font-bold transition-colors",
                     bgColor,
-                    isCurrentRow && "border-primary"
+                    isCurrentRow && "border-primary",
+                    digit && "text-primary-foreground"
                   )}
                 >
-                  {letterGuess}
+                  {digit}
                 </div>
               );
             })}
