@@ -1,1 +1,0 @@
-// This file will be removed in production as we're building a static app
