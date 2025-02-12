@@ -17,5 +17,4 @@ export interface GameStats {
   wins: number;
   currentStreak: number;
   maxStreak: number;
-  guessDistribution?: Record<number, number>;
 }

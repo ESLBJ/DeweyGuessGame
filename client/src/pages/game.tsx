@@ -38,18 +38,7 @@ export default function Game() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b p-4 flex items-center justify-between">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          {theme === "dark" ? (
-            <Sun className="h-5 w-5" />
-          ) : (
-            <Moon className="h-5 w-5" />
-          )}
-        </Button>
-        <h1 className="text-2xl font-bold absolute left-1/2 -translate-x-1/2">DDC Wordle</h1>
+        <h1 className="text-2xl font-bold">DDC Wordle</h1>
         <div className="flex gap-2">
           <Button
             variant="ghost"
@@ -58,11 +47,22 @@ export default function Game() {
           >
             <BarChart2 className="h-5 w-5" />
           </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
+          </Button>
         </div>
       </header>
 
-      <main className="container max-w-lg mx-auto p-4">
-        <div className="mb-8 text-center">
+      <main className="container max-w-lg mx-auto p-4 space-y-8">
+        <div className="text-center">
           <h2 className="text-xl font-bold mb-2">{todaysBook.title}</h2>
           <p className="text-muted-foreground">by {todaysBook.author}</p>
         </div>

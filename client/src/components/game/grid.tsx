@@ -11,17 +11,13 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
   const rows = Array(6).fill("");
 
   return (
-    <div className="flex justify-center items-center">
-    <div className="inline-grid gap-[2px] mx-auto">
+    <div className="grid gap-2">
       {rows.map((_, i) => {
         const isCurrentRow = i === currentRow;
         const guess = isCurrentRow ? currentGuess : guesses[i] || "";
 
         return (
-          <div key={i} className="grid grid-cols-6 gap-[2px] relative">
-            {solution.length > 3 && (
-              <div className="absolute left-[calc(50%-4px)] top-1/2 -translate-y-1/2 w-2 h-2 bg-primary rounded-full" />
-            )}
+          <div key={i} className="grid grid-cols-6 gap-2">
             {Array(6).fill("").map((_, j) => {
               const digit = guess[j];
               const solutionDigit = solution[j];
@@ -57,7 +53,7 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
                 <div
                   key={j}
                   className={cn(
-                    "w-12 h-12 border-2 flex items-center justify-center text-lg font-bold rounded-sm transition-colors",
+                    "w-full aspect-square border-2 flex items-center justify-center text-lg font-bold rounded-sm transition-colors",
                     bgColor,
                     textColor,
                     borderColor,
@@ -73,7 +69,6 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
           </div>
         );
       })}
-      </div>
     </div>
   );
 }

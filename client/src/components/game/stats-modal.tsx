@@ -18,8 +18,6 @@ export function StatsModal({ open, onClose, stats }: StatsModalProps) {
     ? Math.round((stats.wins / stats.totalGames) * 100)
     : 0;
 
-  const maxGuesses = Math.max(...Object.values(stats.guessDistribution || {}), 1);
-
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
@@ -44,27 +42,7 @@ export function StatsModal({ open, onClose, stats }: StatsModalProps) {
             <div className="text-sm text-muted-foreground">Max Streak</div>
           </div>
         </div>
-        <div className="space-y-2 mt-4">
-          <div className="text-lg font-bold">Guess Distribution</div>
-          {[1, 2, 3, 4, 5, 6].map((attempt) => (
-            <div key={attempt} className="flex items-center gap-2">
-              <div className="w-4">{attempt}</div>
-              <div className="flex-1 h-5 bg-muted flex items-center">
-                <div 
-                  className="h-full bg-primary flex items-center justify-end px-2"
-                  style={{ 
-                    width: `${((stats.guessDistribution?.[attempt] || 0) / maxGuesses) * 100}%`,
-                    minWidth: stats.guessDistribution?.[attempt] ? '10%' : '0%'
-                  }}
-                >
-                  <span className="text-primary-foreground text-sm">
-                    {stats.guessDistribution?.[attempt] || 0}
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Progress value={winRate} className="w-full" />
       </DialogContent>
     </Dialog>
   );
