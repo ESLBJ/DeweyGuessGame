@@ -3,6 +3,8 @@ import { Toaster } from "./components/ui/toaster";
 import { ThemeProvider } from "./components/theme-provider";
 import Game from "./pages/game";
 import NotFound from "./pages/not-found";
+import { FaTwitter } from "react-icons/fa";
+import { SiBluesky } from "react-icons/si";
 
 function Router() {
   return (
