@@ -13,13 +13,23 @@ async function createServer() {
   // In development, use Vite's dev server
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
+      root: resolve(__dirname, "../client"),
+      server: {
+        middlewareMode: true,
+        hmr: {
+          port: 24678
+        },
+        watch: {
+          usePolling: true
+        }
+      },
+      appType: "spa"
     });
+    
     app.use(vite.middlewares);
   } else {
     // Serve static files in production
-    app.use(express.static(resolve(__dirname, "../dist")));
+    app.use(express.static(resolve(__dirname, "../dist/public")));
   }
 
   app.listen(PORT, "0.0.0.0", () => {
@@ -27,4 +37,7 @@ async function createServer() {
   });
 }
 
-createServer();
+createServer().catch((err) => {
+  console.error("Error starting server:", err);
+  process.exit(1);
+});
