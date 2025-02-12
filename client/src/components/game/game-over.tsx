@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { FaTwitter, FaThreads } from "react-icons/fa6";
 import { SiSky } from "react-icons/si";
+import { Countdown } from "./countdown";
 import type { Book } from "@shared/types";
 
 interface GameOverProps {
@@ -61,6 +62,8 @@ export function GameOver({
             <p>The correct DDC code was: <span className="font-bold">{solution}</span></p>
           </div>
         )}
+
+        <Countdown />
       </div>
 
       <div className="space-y-4">
