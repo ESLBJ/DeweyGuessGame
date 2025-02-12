@@ -17,7 +17,7 @@ export function Keyboard({ onKey, onEnter, onDelete }: KeyboardProps) {
             key={key}
             variant="outline"
             onClick={() => onKey(key)}
-            className="h-10 text-base"
+            className="h-12 w-12 text-base"
           >
             {key}
           </Button>
@@ -27,13 +27,13 @@ export function Keyboard({ onKey, onEnter, onDelete }: KeyboardProps) {
         <Button
           variant="secondary"
           onClick={onDelete}
-          className="h-10 text-base"
+          className="h-12 text-base"
         >
           Delete
         </Button>
         <Button
           onClick={onEnter}
-          className="h-10 text-base"
+          className="h-12 text-base"
         >
           Enter
         </Button>
