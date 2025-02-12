@@ -11,13 +11,13 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
   const rows = Array(6).fill("");
 
   return (
-    <div className="grid gap-[3px] mx-auto max-w-xs">
+    <div className="inline-grid gap-[2px] mx-auto">
       {rows.map((_, i) => {
         const isCurrentRow = i === currentRow;
         const guess = isCurrentRow ? currentGuess : guesses[i] || "";
 
         return (
-          <div key={i} className="grid grid-cols-6 gap-[3px]">
+          <div key={i} className="grid grid-cols-6 gap-[2px]">
             {Array(6).fill("").map((_, j) => {
               const digit = guess[j];
               const solutionDigit = solution[j];
