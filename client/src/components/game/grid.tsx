@@ -11,38 +11,41 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
   const rows = Array(6).fill("");
 
   return (
-    <div className="grid gap-2 mx-auto max-w-sm">
+    <div className="grid gap-3 mx-auto max-w-sm">
       {rows.map((_, i) => {
         const isCurrentRow = i === currentRow;
         const guess = isCurrentRow ? currentGuess : guesses[i] || "";
 
         return (
-          <div key={i} className="grid grid-cols-6 gap-2">
+          <div key={i} className="grid grid-cols-6 gap-3">
             {Array(6).fill("").map((_, j) => {
               const digit = guess[j];
               const solutionDigit = solution[j];
 
               let bgColor = "bg-background";
-              let textColor = "";
+              let textColor = "text-foreground";
+              let borderColor = "border-muted";
+
               if (digit && !isCurrentRow) {
                 if (digit === solutionDigit) {
                   bgColor = "bg-green-500";
                   textColor = "text-primary-foreground";
+                  borderColor = "border-green-500";
                 } else if (solution.includes(digit)) {
-                  // Need to account for duplicate digits
-                  // Count how many times this digit appears in both strings
-                  const guessCount = [...guess.slice(0, j + 1)].filter(d => d === digit).length;
-                  const solutionCount = [...solution].filter(d => d === digit).length;
+                  const guessCount = guess.slice(0, j + 1).split('').filter(d => d === digit).length;
+                  const solutionCount = solution.split('').filter(d => d === digit).length;
 
-                  // Only show yellow if we haven't exceeded the count in solution
                   if (guessCount <= solutionCount) {
                     bgColor = "bg-yellow-500";
                     textColor = "text-primary-foreground";
+                    borderColor = "border-yellow-500";
                   } else {
                     bgColor = "bg-muted";
+                    textColor = "text-foreground";
                   }
                 } else {
                   bgColor = "bg-muted";
+                  textColor = "text-foreground";
                 }
               }
 
@@ -50,10 +53,13 @@ export function Grid({ guesses, solution, currentRow, currentGuess }: GridProps)
                 <div
                   key={j}
                   className={cn(
-                    "w-12 h-12 border-2 flex items-center justify-center text-xl font-bold transition-colors",
+                    "w-11 h-11 border-2 flex items-center justify-center text-xl font-bold rounded-sm transition-colors",
                     bgColor,
                     textColor,
-                    isCurrentRow && "border-primary"
+                    borderColor,
+                    isCurrentRow && digit && "border-primary",
+                    isCurrentRow && !digit && "border-muted",
+                    !isCurrentRow && !digit && "border-muted"
                   )}
                 >
                   {digit}
